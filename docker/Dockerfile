@@ -13,4 +13,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY apache_beam_pipeline /app
 
 # The default command to run the scripts
- CMD ["sh", "-c", "python /app/create_index.py && python /app/pipeline.py"]
+CMD ["sh", "-c", "python /app/create_index.py && python /app/pipeline.py"]

@@ -1,37 +1,37 @@
-# Use version 3.8 of the Docker Compose file format
-version: '3.8'
-
+version: '3.7'
 services:
-  # Elasticsearch service configuration
   elasticsearch:
-    # Use the official Elasticsearch image
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.14.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.9
+    container_name: elasticsearch
     environment:
-      # Set the discovery type to single-node for standalone operation
+      - node.name=elasticsearch
       - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
     ports:
-      # Map port 9200 on the host to port 9200 on the Elasticsearch container
-      - "9200:9200"
+      - 9200:9200
+      - 9300:9300
     networks:
-      # Connect Elasticsearch to the 'esnet' network
       - esnet
-
-  # Apache Beam service configuration
   beam:
-    # Build the Beam image from the Dockerfile in the parent directory
     build:
       context: ../
       dockerfile: docker/Dockerfile
       cache_from:
-        - beam:latest  # Use the latest Beam image as cache
-
-    # Specify that Beam service depends on Elasticsearch service
+        - beam:latest
     depends_on:
       - elasticsearch
     networks:
-      # Connect Beam to the 'esnet' network
       - esnet
-
-# Define the 'esnet' network
+volumes:
+  esdata:
+    driver: local
 networks:
   esnet:
+    driver: bridge

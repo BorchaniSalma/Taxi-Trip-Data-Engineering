@@ -2,7 +2,7 @@ import time
 from elasticsearch import Elasticsearch
 
 # Create an Elasticsearch client
-es = Elasticsearch(['http://elasticsearch:9200'])
+es = Elasticsearch(['http://localhost:9200'])
 
 # Retry connection to Elasticsearch
 for _ in range(30):  # Retry for 30 times
