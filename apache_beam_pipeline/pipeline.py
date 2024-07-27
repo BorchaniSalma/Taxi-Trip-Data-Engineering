@@ -167,7 +167,7 @@ def run_pipeline(input_file, es_index):
 
 
 if __name__ == "__main__":
-    input_file = '/home/salma/Desktop/Taxi-Trip-Data-Engineering/data/yellow_tripdata_2022-01.csv'
+    input_file = "/app/data/yellow_tripdata_2022-01.csv"
     es_index = 'nyc_taxi_trip_data'  # Elasticsearch index name
     logger.info("Starting pipeline")
     run_pipeline(input_file, es_index)
