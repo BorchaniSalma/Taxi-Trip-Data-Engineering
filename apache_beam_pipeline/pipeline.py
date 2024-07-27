@@ -80,7 +80,7 @@ class WriteToElasticsearch(beam.DoFn):
         self.es = None
 
     def start_bundle(self):
-        self.es = Elasticsearch(['http://localhost:9200'])
+        self.es = Elasticsearch(['http://elasticsearch:9200'])
 
     def process(self, element):
         if element:
