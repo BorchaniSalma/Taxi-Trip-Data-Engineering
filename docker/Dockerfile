@@ -10,7 +10,10 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project files
-COPY apache_beam_pipeline /app
+COPY apache_beam_pipeline /app/apache_beam_pipeline
 
-# The default command to run the scripts
-CMD ["sh", "-c", "python /app/create_index.py && python /app/pipeline.py"]
+# Copy input data file
+COPY data/yellow_tripdata_2022-01.csv /app/data/yellow_tripdata_2022-01.csv
+
+# Set the entry point for the container
+ENTRYPOINT ["python", "apache_beam_pipeline/pipeline.py"]
